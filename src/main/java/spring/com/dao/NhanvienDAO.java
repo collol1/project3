@@ -24,8 +24,16 @@ public class NhanvienDAO {
 
     public int update(Nhanvien n) {
         String sql = "UPDATE nhanvien SET ho_ten=?, ngay_sinh=?, gioi_tinh=?, dia_chi=?, so_dien_thoai=?, vitri_id=? WHERE nhanvien_id=?";
-        return template.update(sql, n.getHoTen(), n.getNgaySinh(), n.getGioiTinh(), n.getDiaChi(), n.getSoDienThoai(), n.getVitriId(), n.getNhanvienId());
+        
+        System.out.println("DEBUG - SQL Update: " + sql);
+        System.out.println("DEBUG - Dữ liệu: " + n);
+        
+        return template.update(sql, n.getHoTen(), n.getNgaySinh(), n.getGioiTinh(), 
+                               n.getDiaChi(), n.getSoDienThoai(), n.getVitriId(), 
+                               n.getNhanvienId());
     }
+
+
 
     public int delete(String id) {
         String sql = "DELETE FROM nhanvien WHERE nhanvien_id=?";

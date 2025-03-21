@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import spring.com.beans.Chamcong;
 import spring.com.beans.Luong;
 import spring.com.dao.LuongDAO;
 
@@ -70,23 +72,18 @@ public class LuongController {
             return "redirect:/luong";
         }
         model.addAttribute("luong", luong);
-        return "luong-form"; // Dùng chung form cho thêm và chỉnh sửa
+        return "luong-edit"; 
     }
 
     // 📌 Xử lý cập nhật lương
-    @PostMapping("/update")
-    public String updateLuong(@Validated @ModelAttribute("luong") Luong luong, BindingResult result, RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            return "luong-form";
-        }
-        try {
-            luongDAO.update(luong);
-            redirect.addFlashAttribute("message", "Cập nhật lương thành công!");
-        } catch (Exception e) {
-            redirect.addFlashAttribute("error", "Lỗi khi cập nhật lương: " + e.getMessage());
-        }
-        return "redirect:/luong";
-    }
+    @PostMapping("/edit/{luongId}")
+    public String updateChamcong(@RequestParam("luongId") String luongId, 
+            @ModelAttribute("luong") Luong luong) {
+    	luong.setLuongId(luongId); // Gán ID từ request vào đối tượng
+    	luongDAO.update(luong);
+    	return "redirect:/luong";
+}
+
 
     // 📌 Xóa lương
     @GetMapping("/delete/{luongId}")

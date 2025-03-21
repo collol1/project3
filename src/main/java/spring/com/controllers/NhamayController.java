@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import spring.com.beans.Luong;
 import spring.com.beans.Nhamay;
 import spring.com.dao.NhamayDAO;
 
@@ -74,19 +76,13 @@ public class NhamayController {
     }
 
     // 📌 Xử lý cập nhật nhà máy
-    @PostMapping("/update")
-    public String updateNhamay(@Validated @ModelAttribute("nhamay") Nhamay nhamay, BindingResult result, RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            return "nhamay-form";
-        }
-        try {
-            nhamayDAO.update(nhamay);
-            redirect.addFlashAttribute("message", "Cập nhật nhà máy thành công!");
-        } catch (Exception e) {
-            redirect.addFlashAttribute("error", "Lỗi khi cập nhật nhà máy: " + e.getMessage());
-        }
-        return "redirect:/nhamay";
-    }
+    @PostMapping("/edit/{nhamayId}")
+    public String updateNhamay(@RequestParam("nhamayId") String nhamayId, 
+            @ModelAttribute("nhamay") Nhamay nhamay) {
+    	nhamay.setNhamayId(nhamayId); // Gán ID từ request vào đối tượng
+    	nhamayDAO.update(nhamay);
+    	return "redirect:/nhamay";
+}
 
     // 📌 Xóa nhà máy
     @GetMapping("/delete/{nhamayId}")

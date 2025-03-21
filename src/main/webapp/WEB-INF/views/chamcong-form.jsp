@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -18,26 +18,25 @@
     <h2 class="mb-4">Nhập thông tin Chấm công</h2>
     
     <!-- Form chấm công -->
-    <form action="chamcong/save" method="post" class="row g-3">
+ 		<form action="<%= request.getContextPath() %>/chamcong/save" method="post">
+
         <!-- ID ẩn (nếu cần hiển thị thì thay type="hidden" bằng type="text") -->
-        <input type="hidden" name="chamcongId" value="${chamcong.chamcongId}">
+        <div>
+        <label for="chamcongId" class="form-label">Chấm Công ID </label>
+         <input type="text" name="chamcongId" value="${chamcong.chamcongId}">
+        </div>
+       
 
         <!-- Chọn Nhân viên -->
         <div class="col-12">
-            <label for="nhanvienId" class="form-label">Nhân viên</label>
-            <select class="form-select" id="nhanvienId" name="nhanvienId">
-                <c:forEach var="nv" items="${listNhanvien}">
-                    <option value="${nv.nhanvienId}" ${chamcong.nhanvienId == nv.nhanvienId ? 'selected' : ''}>
-                        ${nv.hoTen}
-                    </option>
-                </c:forEach>
-            </select>
+            <label for="nhanvienId" class="form-label">Nhân viên ID</label>
+           <input type="text" name="nhanvienId" value="${nhanvien.nhanvienId}">
         </div>
 
         <!-- Ngày -->
         <div class="col-12">
             <label for="ngay" class="form-label">Ngày</label>
-            <input type="date" class="form-control" id="ngay" name="ngay" 
+            <input type="text" class="form-control" id="ngay" name="ngay" 
                    value="${chamcong.ngay}" required />
         </div>
 

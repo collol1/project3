@@ -18,7 +18,7 @@
     <h2 class="mb-4">Nhập thông tin Vị trí Nhân viên</h2>
 
     <!-- Form nhập thông tin vị trí nhân viên -->
-    <form action="${pageContext.request.contextPath}/vitrinhanvien/save" method="post">
+    <form action="${pageContext.request.contextPath}/vitrinhanvien/edit/${vitri.vitriId}" method="post">
 
         <!-- ID Vị trí -->
         <div class="col-12">

@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import spring.com.beans.Nhamay;
 import spring.com.beans.Sanpham;
 import spring.com.dao.SanphamDAO;
 
@@ -70,19 +71,13 @@ public class SanphamController {
     }
 
     // 📌 Xử lý cập nhật sản phẩm
-    @PostMapping("/update")
-    public String updateSanpham(@Validated @ModelAttribute("sanpham") Sanpham sanpham, BindingResult result, RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            return "sanpham-form";
-        }
-        try {
-            sanphamDAO.update(sanpham);
-            redirect.addFlashAttribute("message", "Cập nhật sản phẩm thành công!");
-        } catch (Exception e) {
-            redirect.addFlashAttribute("error", "Lỗi khi cập nhật sản phẩm: " + e.getMessage());
-        }
-        return "redirect:/sanpham";
-    }
+    @PostMapping("/edit/{sanphamId}")
+    public String updateSanpham(@RequestParam("sanphamId") String sanphamId, 
+            @ModelAttribute("sanpham") Sanpham sanpham) {
+    	sanpham.setSanphamId(sanphamId); // Gán ID từ request vào đối tượng
+    	sanphamDAO.update(sanpham);
+    	return "redirect:/sanpham";
+}
 
     // 📌 Xóa sản phẩm
     @GetMapping("/delete/{sanphamId}")

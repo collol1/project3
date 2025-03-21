@@ -18,13 +18,10 @@
     <h2 class="mb-4">Nhập thông tin Nhà máy</h2>
 
     <!-- Form nhập thông tin Nhà máy -->
-    <form action="${pageContext.request.contextPath}/nhamay/save" method="post">
+    <form action="${pageContext.request.contextPath}/nhamay/save/${nhamay.nhamayId}" method="post">
 
         <!-- ID Nhà máy (hidden) -->
-        <div class="col-12">
-            <label for="nhamayId" class="form-label">Nhà máy ID</label>
- 			 <input type="text" name="nhamayId" value="${nhamay.nhamayId}">
-      
+        <input type="hidden" name="nhamayId" value="${nhamay.nhamayId}">
 
         <!-- Tên Nhà máy -->
         <div class="col-12">

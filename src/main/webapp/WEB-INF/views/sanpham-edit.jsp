@@ -18,14 +18,10 @@
     <h2 class="mb-4">Nhập thông tin Sản phẩm</h2>
 
     <!-- Form nhập thông tin sản phẩm -->
-    <form action="${pageContext.request.contextPath}/sanpham/save" method="post">
+    <form action="${pageContext.request.contextPath}/sanpham/edit/${sanpham.sanphamId}" method="post">
 
         <!-- ID Sản phẩm (hidden) -->
-         <div class="col-12">
-            <label for="sanphamId" class="form-label">Sản phẩm ID</label>
-            <input type="text" name="sanphamId" value="${sanpham.sanphamId}">
-        </div>
-        
+        <input type="hidden" name="sanphamId" value="${sanpham.sanphamId}">
 
         <!-- Tên Sản phẩm -->
         <div class="col-12">

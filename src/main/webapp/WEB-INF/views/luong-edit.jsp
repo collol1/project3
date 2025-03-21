@@ -18,12 +18,13 @@
     <h2 class="mb-4">Nhập thông tin Lương</h2>
 
     <!-- Form nhập lương -->
-    <form action="${pageContext.request.contextPath}/luong/save" method="post">
+	<form action="${pageContext.request.contextPath}/luong/edit/${luong.luongId}" method="post">
+
 
         <!-- ID Lương -->
         <div class="col-12">
             <label for="luongId" class="form-label">Lương ID</label>
-            <input type="text" class="form-control" id="luongId" name="luongId"
+            <input type="hidden" class="form-control" id="luongId" name="luongId"
                    value="${luong.luongId}" required />
         </div>
 

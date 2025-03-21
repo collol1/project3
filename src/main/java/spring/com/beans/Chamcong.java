@@ -5,14 +5,14 @@ import java.time.LocalDate;
 public class Chamcong {
     private String chamcongId;
     private String nhanvienId;  // Thay vì lưu đối tượng, chỉ lưu ID nhân viên
-    private LocalDate ngay;
+    private String ngay;
     private int soGioLam;
 
     public Chamcong() {
         super();
     }
 
-    public Chamcong(String chamcongId, String nhanvienId, LocalDate ngay, int soGioLam) {
+    public Chamcong(String chamcongId, String nhanvienId, String ngay, int soGioLam) {
         super();
         this.chamcongId = chamcongId;
         this.nhanvienId = nhanvienId;
@@ -36,11 +36,11 @@ public class Chamcong {
         this.nhanvienId = nhanvienId;
     }
 
-    public LocalDate getNgay() {
+    public String getNgay() {
         return ngay;
     }
 
-    public void setNgay(LocalDate ngay) {
+    public void setNgay(String ngay) {
         this.ngay = ngay;
     }
 

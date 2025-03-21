@@ -65,15 +65,18 @@ public class NhanvienController {
             return "redirect:/nhanvien";
         }
         model.addAttribute("nhanvien", nv);
-        return "nhanvien-form"; // Dùng chung form cho thêm và chỉnh sửa
+        return "nhanvien-edit"; 
     }
     
     // 📌 Xử lý cập nhật nhân viên
-    @PostMapping("/update")
-    public String updateNhanvien(@Validated @ModelAttribute("nhanvien") Nhanvien nhanvien, BindingResult result, RedirectAttributes redirect) {
+    @PostMapping("/edit/{nhanvienId}")
+    public String updateNhanvien(@PathVariable("nhanvienId") String nhanvienId,
+                                 @Validated @ModelAttribute("nhanvien") Nhanvien nhanvien,
+                                 BindingResult result, RedirectAttributes redirect) {
         if (result.hasErrors()) {
-            return "nhanvien-form";
+            return "nhanvien-edit";
         }
+        nhanvien.setNhanvienId(nhanvienId);
         try {
             nhanvienDAO.update(nhanvien);
             redirect.addFlashAttribute("message", "Cập nhật nhân viên thành công!");
@@ -82,6 +85,8 @@ public class NhanvienController {
         }
         return "redirect:/nhanvien";
     }
+
+
     
     // 📌 Xóa nhân viên
     @GetMapping("/delete/{nhanvienId}")

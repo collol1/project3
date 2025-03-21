@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -70,23 +71,19 @@ public class ChamcongController {
             return "redirect:/chamcong";
         }
         model.addAttribute("chamcong", chamcong);
-        return "chamcong-form"; // Dùng chung form cho thêm và chỉnh sửa
+        return "chamcong-edit"; 
     }
 
     // 📌 Xử lý cập nhật chấm công
-    @PostMapping("/update")
-    public String updateChamcong(@Validated @ModelAttribute("chamcong") Chamcong chamcong, BindingResult result, RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            return "chamcong-form";
-        }
-        try {
-            chamcongDAO.update(chamcong);
-            redirect.addFlashAttribute("message", "Cập nhật chấm công thành công!");
-        } catch (Exception e) {
-            redirect.addFlashAttribute("error", "Lỗi khi cập nhật chấm công: " + e.getMessage());
-        }
-        return "redirect:/chamcong";
-    }
+    @PostMapping("/edit/{chamcongId}")
+    public String updateChamcong(@RequestParam("chamcongId") String chamcongId, 
+            @ModelAttribute("chamcong") Chamcong chamcong) {
+chamcong.setChamcongId(chamcongId); // Gán ID từ request vào đối tượng
+chamcongDAO.update(chamcong);
+return "redirect:/chamcong";
+}
+
+    
 
     // 📌 Xóa chấm công
     @GetMapping("/delete/{chamcongId}")

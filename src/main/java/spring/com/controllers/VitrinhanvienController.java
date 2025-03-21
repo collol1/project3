@@ -70,19 +70,13 @@ public class VitrinhanvienController {
     }
     
     // 📌 Xử lý cập nhật vị trí nhân viên
-    @PostMapping("/update")
-    public String updateVitriNhanvien(@Validated @ModelAttribute("vitriNhanvien") VitriNhanvien vitriNhanvien, BindingResult result, RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            return "vitrinhanvien-form";
-        }
-        try {
-            vitriNhanvienDAO.update(vitriNhanvien);
-            redirect.addFlashAttribute("message", "Cập nhật vị trí nhân viên thành công!");
-        } catch (Exception e) {
-            redirect.addFlashAttribute("error", "Lỗi khi cập nhật vị trí nhân viên: " + e.getMessage());
-        }
-        return "redirect:/vitrinhanvien";
-    }
+    @PostMapping("/edit/{vitriId}")
+    public String updateVitriNhanvien(@RequestParam("vitriId") String vitriId, 
+            @ModelAttribute("sanpham") VitriNhanvien vitrinhanvien) {
+    	vitrinhanvien.setVitriId(vitriId); // Gán ID từ request vào đối tượng
+    	 vitriNhanvienDAO.update(vitrinhanvien);
+    	return "redirect:/sanpham";
+}
     
     // 📌 Xóa vị trí nhân viên
     @GetMapping("/delete/{vitriId}")

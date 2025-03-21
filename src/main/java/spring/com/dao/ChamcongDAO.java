@@ -23,9 +23,17 @@ public class ChamcongDAO {
     }
 
     public int update(Chamcong c) {
-        String sql = "UPDATE chamcong SET nhanvien_id=?, ngay=?, so_gio_lam=? WHERE chamcong_id=?";
+        String checkSql = "SELECT COUNT(*) FROM chamcong WHERE chamcong_id = ?";
+        int count = template.queryForObject(checkSql, Integer.class, c.getChamcongId());
+
+        if (count == 0) {
+            throw new RuntimeException("Không tìm thấy ID để cập nhật: " + c.getChamcongId());
+        }
+
+        String sql = "UPDATE chamcong SET nhanvien_id = ?, ngay = ?, so_gio_lam = ? WHERE chamcong_id = ?";
         return template.update(sql, c.getNhanvienId(), c.getNgay(), c.getSoGioLam(), c.getChamcongId());
     }
+
 
     public int delete(String id) {
         String sql = "DELETE FROM chamcong WHERE chamcong_id=?";
@@ -44,7 +52,7 @@ public class ChamcongDAO {
                 Chamcong c = new Chamcong();
                 c.setChamcongId(rs.getString("chamcong_id"));
                 c.setNhanvienId(rs.getString("nhanvien_id"));
-                c.setNgay(rs.getDate("ngay").toLocalDate());
+                c.setNgay(rs.getString("ngay"));
                 c.setSoGioLam(rs.getInt("so_gio_lam"));
                 return c;
             }
